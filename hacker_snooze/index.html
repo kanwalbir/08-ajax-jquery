@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <title>Hacker Snooze</title>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <div class="row">
+      <div class=col-12>
+
+        <div class="row hack">
+          <div class="col-mid-8 heading">
+            Hack or Snooze
+          </div>
+          <div class="col-mid-2 text">
+            <a id="submitFav" href="#">submit</a>
+          </div>
+          <div class="col-mid-2 text" id="bar">|</div>
+          <div class="col-mid-2 text">
+            <a id="favs" href="#">favorites</a>
+            <a class="hide" id="all" href="#">all</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="subForm hide">
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label for="colFormLabel" class="col-sm-1 col-form-label">title</label>
+        <div class="col-sm-6">
+          <input id="title" type="text" class="form-control form-control-lg">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-1"></div>
+        <label for="colFormLabel" class="col-sm-1 col-form-label">url</label>
+        <div class="col-sm-6">
+          <input id="url" type="url" class="form-control form-control-lg">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-primary" id="btnClick">submit</button>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="row list">
+      <div class="col-12" id="reg-stories">
+        <ol class="stories">
+          <li id="1">
+            <span class="fav">
+              <i class="foo far fa-star"></i>
+              <i class="hide foot fas fa-star"></i>
+            </span>
+            <span class="list-text">This is a test 1</span>
+            <span class="smallSite">
+              <a href="#" class="smallSite">(123.cookies)</a>
+            </span>
+          </li>
+          <li id="2">
+            <span class="fav">
+              <i class="foo far fa-star"></i>
+              <i class="hide foot fas fa-star"></i>
+            </span>
+            <span class="list-text">This is a test 2</span>
+            <span class="smallSite">
+              <a href="#" class="smallSite">(123.waffles)</a>
+            </span>
+          </li>
+          <li id="3">
+            <span class="fav">
+              <i class="foo far fa-star"></i>
+              <i class="hide foot fas fa-star"></i>
+            </span>
+            <span class="list-text">This is a test 3</span>
+            <span class="smallSite">
+              <a href="#" class="smallSite">(123.chicken)</a>
+            </span>
+          </li>
+        </ol>
+      </div>
+  </main>
+
+
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
+
+
+  </script>
+  <script text="text/javscript" src="./script.js"></script>
+</body>
+
+</html>
