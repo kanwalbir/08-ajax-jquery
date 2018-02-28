@@ -30,11 +30,27 @@
             <a id="favs" href="#">favorites</a>
             <a class="hide" id="all" href="#">all</a>
           </div>
+          <div class="col-4">
+            <label id="test">welcome: </label>
+          </div>
+          <div class="col-mid-2 text">
+            <input class="btn btn-primary" type="submit" value="sign up" id="sign-up">
+          </div>
+          <div class="col-1"></div>
+          <div class="col-mid-2 text">
+            <input class="btn btn-primary" type="submit" value="sign in" id="sign-in">
+          </div>
+          <!-- <div class="col-mid-2 text">
+            <input class="btn btn-primary hide" type="submit" value="logout">
+          </div> -->
         </div>
       </div>
     </div>
 
-    <form class="subForm hide">
+    <!--           Submit Form      -->
+
+
+    <form class="sub-form hide">
       <div class="form-group row">
         <div class="col-sm-1"></div>
         <label for="colFormLabel" class="col-sm-1 col-form-label">title</label>
@@ -52,45 +68,71 @@
       <div class="form-group row">
         <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary" id="btnClick">submit</button>
+          <button type="submit" class="btn btn-primary" id="submit-story">submit</button>
         </div>
       </div>
+    </form>
 
+    <!--         Sign-up                       -->
+
+    <form class="sign-up-form hide">
+      <div class="form-group row">
+        <label for="colFormLabel" class="col-sm-1 col-form-label">name</label>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+          <input id="name-sign-up" type="text" class="form-control form-control-lg">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="colFormLabel" class="col-sm-1 col-form-label">username</label>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+          <input id="username-sign-up" type="text" class="form-control form-control-lg">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="colFormLabel" class="col-sm-1 col-form-label">password</label>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+          <input id="password-sign-up" type="password" class="form-control form-control-lg">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-primary" id="submit-sign-up">sign up</button>
+        </div>
+      </div>
+    </form>
+
+    <!--               Sign-In      -->
+
+    <form class="sign-in-form hide">
+      <div class="form-group row">
+        <label for="colFormLabel" class="col-sm-1 col-form-label">username</label>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+          <input id="username-in" type="text" class="form-control form-control-lg">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="colFormLabel" class="col-sm-1 col-form-label">password</label>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+          <input id="password-in" type="password" class="form-control form-control-lg">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+          <button id="submit-sign-in" type="submit" class="btn btn-primary">sign in</button>
+        </div>
+      </div>
     </form>
 
     <div class="row list">
       <div class="col-12" id="reg-stories">
         <ol class="stories">
-          <li id="1">
-            <span class="fav">
-              <i class="foo far fa-star"></i>
-              <i class="hide foot fas fa-star"></i>
-            </span>
-            <span class="list-text">This is a test 1</span>
-            <span class="smallSite">
-              <a href="#" class="smallSite">(123.cookies)</a>
-            </span>
-          </li>
-          <li id="2">
-            <span class="fav">
-              <i class="foo far fa-star"></i>
-              <i class="hide foot fas fa-star"></i>
-            </span>
-            <span class="list-text">This is a test 2</span>
-            <span class="smallSite">
-              <a href="#" class="smallSite">(123.waffles)</a>
-            </span>
-          </li>
-          <li id="3">
-            <span class="fav">
-              <i class="foo far fa-star"></i>
-              <i class="hide foot fas fa-star"></i>
-            </span>
-            <span class="list-text">This is a test 3</span>
-            <span class="smallSite">
-              <a href="#" class="smallSite">(123.chicken)</a>
-            </span>
-          </li>
         </ol>
       </div>
   </main>
@@ -98,8 +140,6 @@
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
-
-
   </script>
   <script text="text/javscript" src="./script.js"></script>
 </body>

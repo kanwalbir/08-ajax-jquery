@@ -66,7 +66,9 @@ a.smallSite {
   color: rgb(162, 164, 162);
 }
 
-.subForm {
+.sub-form,
+.sign-up-form,
+.sign-in-form {
   margin-right: 13%;
   margin-left: 13%;
   background: rgb(245, 245, 239);
@@ -84,7 +86,7 @@ a.smallSite {
   background: rgb(167, 162, 153);
 }
 
-/* stories list */
+/********** stories list **********/
 
 .list {
   margin-right: 13%;
