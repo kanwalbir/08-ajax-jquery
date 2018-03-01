@@ -165,10 +165,12 @@ $(document).ready(() => {
 
     // localStorage.setItem("token", data.data.token);
     let token = data.data.token;
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", token); // TOKEN
 
     let parseUser = JSON.parse(atob(token.split(".")[1]));
-    localStorage.setItem("username", parseUser.username);
+    localStorage.setItem("username", parseUser.username); // STORED
+
+
     console.log("Welcome" + parseUser.username);
     $('#test').text(`${parseUser.username}`);
     console.log("made it!");
@@ -198,27 +200,29 @@ $(document).ready(() => {
     $('.sign-in-form').trigger('reset');
   })
 
-  // function loginUser(username, password) {
-  //   let response = $.ajax({
-  //     url: "https://hack-or-snooze.herokuapp.com/auth",
-  //     headers: {
-  //       Authorization: 'Bearer'
-  //     },
-  //     data: {
-  //       data: {
-  //         username,
-  //         password
-  //       }
-  //     }
-  //   });
-  //   console.log("This is the response: " + response);
-  //   return response;
-  // }
+
+  /**********    getUser             ****************/
+
+  $('#test').on('click', () => {
+    let localToken = localStorage.getItem("token");
+    let localUser = localStorage.getItem("username");
+
+    // if (isLoggin()) 
+    getUser(localUser).then(function (data) {
+      // debugger;
+
+    })
+    // $("#reg-stories").hide();
+    // $("#user-stories").show();
+
+    $("#user-stories, #reg-stories").toggle();
+  })
 
   function getUser(username) {
     let token = localStorage.getItem("token")
+    // debugger;
     return $.ajax({
-      url: "https://hack-or-snooze.herokuapp.com/users/" + username,
+      url: `https://hack-or-snooze.herokuapp.com/users/${username}`,
       headers: {
         Authorization: `Bearer ${token}`
       }
