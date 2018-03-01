@@ -151,14 +151,17 @@ $(document).ready(() => {
         }
       }
     }).then(function (val) {
+      //debugger;
       return genToken(username, password);
-    }).then(function (data) {
-      parse_token(data);
+      //debugger;
+    }).then(function (token) {
+      store_token(token);
+      //debugger;
     });
   }
 
   /*********************  Parse Token         *************************/
-  function parse_token(data) {
+  function store_token(data) {
 
     // localStorage.setItem("token", data.data.token);
     let token = data.data.token;
@@ -181,28 +184,36 @@ $(document).ready(() => {
 
     // let token = signIn($username, $password);
 
-    loginUser($username, $password).then(function (data) {
-      console.log("This is the data before parsing: " + parsing);
-      parse_token(data)
-    });
+    // loginUser($username, $password).then(function (data) {
+    //   console.log("This is the data before parsing: " + parsing);
+    //   parse_token(data)
+    // });
+
+    // gen_token creates promise that requires resolution
+    genToken($username, $password).then(function (token) {
+      store_token(token);
+    })
 
     $('.sign-in-form').slideUp('slow');
     $('.sign-in-form').trigger('reset');
   })
 
-  function loginUser(username, password) {
-    let response = $.ajax({
-      url: "https://hack-or-snooze.herokuapp.com/auth",
-      data: {
-        data: {
-          username,
-          password
-        }
-      }
-    });
-    console.log("This is the response: " + response);
-    return response;
-  }
+  // function loginUser(username, password) {
+  //   let response = $.ajax({
+  //     url: "https://hack-or-snooze.herokuapp.com/auth",
+  //     headers: {
+  //       Authorization: 'Bearer'
+  //     },
+  //     data: {
+  //       data: {
+  //         username,
+  //         password
+  //       }
+  //     }
+  //   });
+  //   console.log("This is the response: " + response);
+  //   return response;
+  // }
 
   function getUser(username) {
     let token = localStorage.getItem("token")
@@ -214,7 +225,9 @@ $(document).ready(() => {
     })
   }
 
-
+  function isLoggedIn() {
+    return localStorage.getItem("token") !== null;
+  }
 
 
   // function signIn(username, password) {
