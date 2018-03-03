@@ -20,7 +20,9 @@ $(document).ready(() => {
     console.log("list item added!!")
     e.preventDefault();
     let $title = $('#title').val();
-    let $url = $('#url').val().replace(/^\/\/|^.*?:(\/\/)?(www\.)?/, '').replace(/^www\./, '');;
+    //let $url = $('#url').val().replace(/^\/\/|^.*?:(\/\/)?(www\.)?/, '').replace(/^www\./, '');
+    let $url = $('#url').val();
+    createStory($title, $url)
     id++;
     // add story
     $('ol.stories').append(
@@ -236,29 +238,35 @@ $(document).ready(() => {
 
   }
 
-  /**********    createStories             ****************/
+  /**********    createStory             ****************/
   //submit-story
 
-  function createStories() {
+  function createStory(title, url) {
 
     let username = localStorage.getItem("username")
     let token = localStorage.getItem("token")
-    console.log(username, token, storyId)
 
-    $.ajax({
+    return $.ajax({
       method: "POST",
-      url: `https://hack-or-snooze.herokuapp.com/stories?skip=0&limit=10`,
+      url: "https://hack-or-snooze.herokuapp.com/stories",
       headers: {
         Authorization: `Bearer ${token}`
+      },
+      data: {
+        data: {
+          username,
+          author: 'Sunny Hunter',
+          title,
+          url,
+        }
       }
-    }).then(function (data) {
-      console.log(data['data']['favorites']);
+    }).then(function (response) {
+      console.log(response['data']);
     })
-
   }
 
-  /**********    removeStories             ****************/
-  function removeStories() {
+  /**********    removeStory             ****************/
+  function removeStory() {
 
   }
 
