@@ -58,13 +58,21 @@ $(document).ready(() => {
   $('.stories').on('click', 'span.fav', e => {
     let fav = $(e.currentTarget).children().first();
     let icon_fa_prefix = $(e.currentTarget).children().first().attr('data-prefix');
-    $(e.currentTarget).parent().toggleClass("favorited");
+    let clicked = $(e.currentTarget)
+    let storyId = clicked.parent().attr('id') //$(e.currentTarget).parent().attr('id')
+    console.log(storyId)
+
+    //$(e.currentTarget).parent().toggleClass("favorited");
+    clicked.parent().toggleClass("favorited");
+
     if (icon_fa_prefix === "fas") {
-      $(e.currentTarget).children().first().attr('data-prefix', 'far');
+      removeFavorites(storyId)
+      clicked.children().first().attr('data-prefix', 'far'); //$(e.currentTarget).children().first().attr('data-prefix', 'far');
 
     } else {
-      $(e.currentTarget).parent().addClass("favorited");
-      $(e.currentTarget).children().first().attr('data-prefix', 'fas');
+      addFavorites(storyId)
+      clicked.parent().addClass("favorited"); //$(e.currentTarget).parent().addClass("favorited");
+      clicked.children().first().attr('data-prefix', 'fas'); //$(e.currentTarget).children().first().attr('data-prefix', 'fas');
     }
   });
 
@@ -123,20 +131,8 @@ $(document).ready(() => {
     $('.sign-up-form').trigger('reset');
   })
 
-  function genToken(username, password) {
-    return $.ajax({
-      method: "POST",
-      url: "https://hack-or-snooze.herokuapp.com/auth",
-      data: {
-        data: {
-          username,
-          password
-        }
-      }
-    });
-  }
-
   function signUp(name, username, password) {
+
     $.ajax({
       method: "POST",
       url: "https://hack-or-snooze.herokuapp.com/users",
@@ -151,29 +147,36 @@ $(document).ready(() => {
         }
       }
     }).then(function (val) {
-      //debugger;
       return genToken(username, password);
-      //debugger;
     }).then(function (token) {
-      store_token(token);
-      //debugger;
+      storeToken(token);
+    });
+  }
+  /*********************  Generate Token   *************************/
+
+  function genToken(username, password) {
+    return $.ajax({
+      method: "POST",
+      url: "https://hack-or-snooze.herokuapp.com/auth",
+      data: {
+        data: {
+          username,
+          password
+        }
+      }
     });
   }
 
-  /*********************  Parse Token         *************************/
-  function store_token(data) {
+  /*********************  Parse & Set Token   *************************/
 
-    // localStorage.setItem("token", data.data.token);
+  function storeToken(data) {
+
     let token = data.data.token;
-    localStorage.setItem("token", token); // TOKEN
-
     let parseUser = JSON.parse(atob(token.split(".")[1]));
-    localStorage.setItem("username", parseUser.username); // STORED
 
-
-    console.log("Welcome" + parseUser.username);
-    $('#test').text(`${parseUser.username}`);
-    console.log("made it!");
+    localStorage.setItem("token", token); // TOKEN STORED
+    localStorage.setItem("username", parseUser.username); // USERNAME STORED
+    $('#test').text("Welcome " + parseUser.username);
 
   }
 
@@ -184,22 +187,80 @@ $(document).ready(() => {
     let $username = $('#username-sign-in').val();
     let $password = $('#password-sign-in').val();
 
-    // let token = signIn($username, $password);
-
-    // loginUser($username, $password).then(function (data) {
-    //   console.log("This is the data before parsing: " + parsing);
-    //   parse_token(data)
-    // });
-
-    // gen_token creates promise that requires resolution
-    genToken($username, $password).then(function (token) {
-      store_token(token);
+    // genToken creates promise that requires resolution
+    return genToken($username, $password).then(function (token) {
+      storeToken(token);
     })
 
     $('.sign-in-form').slideUp('slow');
     $('.sign-in-form').trigger('reset');
   })
 
+  /**********    addFavorites             ****************/
+
+  function addFavorites(storyId) {
+
+    let username = localStorage.getItem("username")
+    let token = localStorage.getItem("token")
+    console.log(username, token, storyId)
+
+    $.ajax({
+      method: "POST",
+      url: `https://hack-or-snooze.herokuapp.com/users/${username}/favorites/${storyId}`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(function (data) {
+      console.log(data['data']['favorites']);
+    })
+
+  }
+
+  /**********    removeFavorites             ****************/
+
+  function removeFavorites(storyId) {
+
+    let username = localStorage.getItem("username")
+    let token = localStorage.getItem("token")
+    console.log(username, token, storyId)
+
+    $.ajax({
+      method: "DELETE",
+      url: `https://hack-or-snooze.herokuapp.com/users/${username}/favorites/${storyId}`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(function (data) {
+      console.log(data['data']['favorites']);
+    })
+
+  }
+
+  /**********    createStories             ****************/
+  //submit-story
+
+  function createStories() {
+
+    let username = localStorage.getItem("username")
+    let token = localStorage.getItem("token")
+    console.log(username, token, storyId)
+
+    $.ajax({
+      method: "POST",
+      url: `https://hack-or-snooze.herokuapp.com/stories?skip=0&limit=10`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(function (data) {
+      console.log(data['data']['favorites']);
+    })
+
+  }
+
+  /**********    removeStories             ****************/
+  function removeStories() {
+
+  }
 
   /**********    getUser             ****************/
 
@@ -209,7 +270,6 @@ $(document).ready(() => {
 
     // if (isLoggin()) 
     getUser(localUser).then(function (data) {
-      // debugger;
 
     })
     // $("#reg-stories").hide();
@@ -220,7 +280,6 @@ $(document).ready(() => {
 
   function getUser(username) {
     let token = localStorage.getItem("token")
-    // debugger;
     return $.ajax({
       url: `https://hack-or-snooze.herokuapp.com/users/${username}`,
       headers: {
