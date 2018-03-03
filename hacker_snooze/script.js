@@ -78,6 +78,13 @@ $(document).ready(() => {
     }
   });
 
+  // del icon
+  $('.stories').on('click', 'span.del', e => {
+    let clicked = $(e.currentTarget);
+    let storyId = clicked.parent().attr('id');
+    removeStory(storyId);
+  });
+
   /*******************     API        ***************************/
 
   /*******************     Top Ten    ***************************/
@@ -109,6 +116,9 @@ $(document).ready(() => {
         <li id=${$id}>
           <span class="fav">
             <i class="foo far fa-star"></i>
+          </span>
+          <span class="del">
+            <i class="fas fa-times"></i>
           </span>
           <span class="list-text">${$title}</span>
           <span class="smallSite">
@@ -239,7 +249,6 @@ $(document).ready(() => {
   }
 
   /**********    createStory             ****************/
-  //submit-story
 
   function createStory(title, url) {
 
@@ -266,8 +275,21 @@ $(document).ready(() => {
   }
 
   /**********    removeStory             ****************/
-  function removeStory() {
 
+  function removeStory(storyId) {
+
+    let username = localStorage.getItem("username")
+    let token = localStorage.getItem("token")
+
+    return $.ajax({
+      method: "DELETE",
+      url: `https://hack-or-snooze.herokuapp.com/stories/${storyId}`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    }).then(function (response) {
+      console.log(response['data']);
+    })
   }
 
   /**********    getUser             ****************/
