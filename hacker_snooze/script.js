@@ -1,7 +1,7 @@
 var id = 3;
 
 $(document).ready(() => {
-
+  // alert("Hi!!")
   /****** submit section  *******/
 
   $('#submitFav').on('click', () => {
@@ -12,9 +12,13 @@ $(document).ready(() => {
     $('.sign-up-form').slideToggle(400);
   })
 
-  $('#sign-in').on('click', () => {
-    $('.sign-in-form').slideToggle(400);
-  })
+  // $('#sign-in').on('click', () => {
+  //   // $('.sign-in-form').slideToggle(400);
+
+  // })
+
+
+
 
   $('form.sub-form').submit(e => {
     console.log("list item added!!")
@@ -126,9 +130,7 @@ $(document).ready(() => {
     let $password = $('#password-sign-up').val();
 
     signUp($name, $username, $password);
-
-    $('.sign-up-form').slideUp('slow');
-    $('.sign-up-form').trigger('reset');
+    location.href = 'index.html' + $(this).serialize();
   })
 
   function signUp(name, username, password) {
@@ -187,13 +189,14 @@ $(document).ready(() => {
     let $username = $('#username-sign-in').val();
     let $password = $('#password-sign-in').val();
 
-    // genToken creates promise that requires resolution
-    return genToken($username, $password).then(function (token) {
+    genToken($username, $password).then(function (token) {
+      location.href = 'index.html'
       storeToken(token);
+    }).catch(function (data) {
+      debugger;
+      alert("Invalid input!");
     })
 
-    $('.sign-in-form').slideUp('slow');
-    $('.sign-in-form').trigger('reset');
   })
 
   /**********    addFavorites             ****************/
