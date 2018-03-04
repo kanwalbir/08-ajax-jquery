@@ -11,23 +11,23 @@
   <b>Login</b>
   <br>
   <br>
-  <form method="post" action="login">
+  <form class="sign-in-form" method="post" action="login">
     <table border="0">
       <tr>
         <td>username:</td>
         <td>
-          <input type="text" name="acct" size="20">
+          <input id="username-sign-in" type="text" name="acct" size="20">
         </td>
       </tr>
       <tr>
         <td>password:</td>
         <td>
-          <input type="password" name="pw" size="20">
+          <input id="password-sign-in" type="password" name="pw" size="20">
         </td>
       </tr>
     </table>
     <br>
-    <input class="sign-up-form" type="submit" value="login">
+    <input id="submit-sign-in" class="sign-in-form" type="submit" value="login">
   </form>
   <br>
   <a href="#">Forgot your password?</a>
@@ -36,30 +36,33 @@
   <b>Create Account</b>
   <br>
   <br>
-  <form method="post" action="login">
+  <form class="sign-up-form" method="post" action="login">
     <table border="0">
       <tr>
         <td>name:</td>
         <td>
-          <input type="text" name="acct" size="20">
+          <input id="name-sign-up" type="text" name="acct" size="20">
         </td>
       </tr>
       <tr>
         <td>username:</td>
         <td>
-          <input type="text" name="acct" size="20">
+          <input id="username-sign-up" type="text" name="acct" size="20">
         </td>
       </tr>
       <tr>
         <td>password:</td>
         <td>
-          <input type="password" name="pw" size="20">
+          <input id="password-sign-up" type="password" name="pw" size="20">
         </td>
       </tr>
     </table>
     <br>
-    <input type="submit" value="create account">
+    <input id="submit-sign-up" type="submit" value="create account">
   </form>
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
+  </script>
+  <script text="text/javscript" src="./script.js"></script>
 </body>
 
 </html>

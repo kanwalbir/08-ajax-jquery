@@ -152,7 +152,7 @@ li {
 }
 
 .favorites {
-  display: none;
+  /* display: none; */
 }
 
 ul.fav-stories {
@@ -161,4 +161,10 @@ ul.fav-stories {
 
 .active {
   list-style-type: none;
+}
+
+/*******/
+
+#logout-link {
+  /* display: none; */
 }

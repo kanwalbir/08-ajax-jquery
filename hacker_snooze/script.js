@@ -8,9 +8,9 @@ $(document).ready(() => {
     $('.sub-form').slideToggle(400);
   })
 
-  $('#sign-up').on('click', () => {
-    $('.sign-up-form').slideToggle(400);
-  })
+  // $('#sign-up').on('click', () => {
+  //   $('.sign-up-form').slideToggle(400);
+  // })
 
   // $('#sign-in').on('click', () => {
   //   // $('.sign-in-form').slideToggle(400);
@@ -49,16 +49,64 @@ $(document).ready(() => {
   /********* toggle between favorites and all ********/
 
   $('#favs').on('click', e => {
-    $('#favs, #all').toggle();
-    $("li:not(.favorited)").hide()
-    $('ol').addClass("active")
-  })
 
-  $('#all').on('click', e => {
-    $('#favs, #all').toggle();
-    $("li").show()
-    $('ol').removeClass("active")
-  })
+    $('.stories').hide();
+    $('.favorites').show();
+    let userName = localStorage.getItem("username")
+
+    // Gen favorites
+    getUser(userName).then(data => {
+      let favorites = data.data.favorites;
+      for (let story of favorites) {
+        genFavorite(story)
+      }
+    })
+  });
+
+  function genFavorite(story) {
+
+    // console.log(userObj);
+    // debugger;
+    let $id = story.storyId;
+    let $title = story.title;
+    let $url = story.url;
+    $('ol.favorites').append(
+      `
+      <li id=${$id}>
+        <span class="fav">
+          <i class="foo fas fa-star"></i>
+        </span>
+        <span class="list-text">${$title}</span>
+        <span class="smallSite">
+          <a href="#" class="smallSite">(${$url})</a>
+        </span>
+      </li>
+      `
+    );
+  }
+
+  function getUser(username) {
+    let token = localStorage.getItem("token")
+    let userPromise = $.ajax({
+      // return $.ajax({
+      url: `https://hack-or-snooze.herokuapp.com/users/${username}`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    // let userObj = Promise.resolve(userPromise).then(function (data) {
+    //   return data;
+    // })
+    // return userObj;
+    return userPromise;
+  }
+
+
+  // $('#all').on('click', e => {
+  //   $('#favs, #all').toggle();
+  //   $("li").show()
+  //   $('ol').removeClass("active")
+  // })
 
   // fav icon
   $('.stories').on('click', 'span.fav', e => {
@@ -192,11 +240,15 @@ $(document).ready(() => {
     let $password = $('#password-sign-in').val();
 
     genToken($username, $password).then(function (token) {
-      location.href = 'index.html'
+      // $('#login-link').load('./index.html').hide();
+      // $('#logout-link').load('./index.html').show();
+
+      location.href = 'index.html';
       storeToken(token);
     }).catch(function (data) {
-      debugger;
-      alert("Invalid input!");
+      if (data.status === 404 || data.status === 401) {
+        $('body').prepend("Bad Login. <br><br>")
+      } else alert("Bad login.")
     })
 
   })
@@ -217,6 +269,8 @@ $(document).ready(() => {
       }
     }).then(function (data) {
       console.log(data['data']['favorites']);
+      // console.log(data)
+      // localStorage.set
     })
 
   }
@@ -289,15 +343,7 @@ $(document).ready(() => {
     $("#user-stories, #reg-stories").toggle();
   })
 
-  function getUser(username) {
-    let token = localStorage.getItem("token")
-    return $.ajax({
-      url: `https://hack-or-snooze.herokuapp.com/users/${username}`,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-  }
+
 
   function isLoggedIn() {
     return localStorage.getItem("token") !== null;
