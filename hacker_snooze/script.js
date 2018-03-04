@@ -1,4 +1,4 @@
-var id = 3;
+// var id = 3;
 
 $(document).ready(() => {
   // alert("Hi!!")
@@ -18,35 +18,65 @@ $(document).ready(() => {
   // })
 
 
-
+  //   <span class="del">
+  //   <i class="fas fa-times"></i>
+  // </span>
 
   $('form.sub-form').submit(e => {
+
     console.log("list item added!!")
     e.preventDefault();
     let $title = $('#title').val();
     //let $url = $('#url').val().replace(/^\/\/|^.*?:(\/\/)?(www\.)?/, '').replace(/^www\./, '');
     let $url = $('#url').val();
-    createStory($title, $url)
-    id++;
-    // add story
-    $('ol.stories').append(
-      `
-        <li id=${id}>
-          <span class="fav">
-            <i class="foo far fa-star"></i>
-          </span>
-          <span class="list-text">${$title}</span>
-          <span class="smallSite">
-            <a href="#" class="smallSite">(${$url})</a>
-          </span>
-        </li>
-        `
-    );
-    $('.sub-form').slideUp('slow');
-    $('.sub-form').trigger('reset');
+    let $author = $('#author').val();
+
+    createStory($title, $url, $author);
   })
 
   /********* toggle between favorites and all ********/
+
+  $('#my-stories').on('click', e => {
+
+    $('.stories').hide();
+    $('.user-stories').show();
+    let userName = localStorage.getItem("username")
+
+    // Gen favorites
+    getUser(userName).then(data => {
+      let stories = data.data.stories;
+      for (let story of stories)
+        genUserStories(story)
+    })
+  });
+
+  function genUserStories(story) {
+
+    // console.log(userObj);
+    // debugger;
+    let $id = story.storyId;
+    let $title = story.title;
+    let $url = story.url;
+    $('ol.user-stories').append(
+      `
+      <li id=${$id}>
+        <span class="fav">
+          <i class="foo far fa-star"></i>
+        </span>
+        <span class="del">
+          <i class="fas fa-times"></i>
+        </span>
+        <a href="${$url}" class="smallSite" target="_blank">
+          <span class="list-text">${$title}</span>
+        </a>
+        <span class="smallSite">
+          <a href="#" class="smallSite">(${$url})</a>
+        </span>
+      </li>
+      `
+    );
+  }
+
 
   $('#favs').on('click', e => {
 
@@ -57,9 +87,8 @@ $(document).ready(() => {
     // Gen favorites
     getUser(userName).then(data => {
       let favorites = data.data.favorites;
-      for (let story of favorites) {
+      for (let story of favorites)
         genFavorite(story)
-      }
     })
   });
 
@@ -76,7 +105,9 @@ $(document).ready(() => {
         <span class="fav">
           <i class="foo fas fa-star"></i>
         </span>
+        <a href="${$url}" class="smallSite" target="_blank">
         <span class="list-text">${$title}</span>
+        </a>
         <span class="smallSite">
           <a href="#" class="smallSite">(${$url})</a>
         </span>
@@ -108,7 +139,7 @@ $(document).ready(() => {
   //   $('ol').removeClass("active")
   // })
 
-  // fav icon
+
   $('.stories').on('click', 'span.fav', e => {
     let fav = $(e.currentTarget).children().first();
     let icon_fa_prefix = $(e.currentTarget).children().first().attr('data-prefix');
@@ -130,10 +161,35 @@ $(document).ready(() => {
     }
   });
 
+
+  // fav icon
+  $('.favorites').on('click', 'span.fav', e => {
+    let fav = $(e.currentTarget).children().first();
+    let icon_fa_prefix = $(e.currentTarget).children().first().attr('data-prefix');
+    let clicked = $(e.currentTarget)
+    let storyId = clicked.parent().attr('id') //$(e.currentTarget).parent().attr('id')
+    console.log(storyId)
+
+    //$(e.currentTarget).parent().toggleClass("favorited");
+    clicked.parent().toggleClass("favorited");
+
+    if (icon_fa_prefix === "fas") {
+      removeFavorites(storyId)
+      clicked.children().first().attr('data-prefix', 'far'); //$(e.currentTarget).children().first().attr('data-prefix', 'far');
+      clicked.parent().remove()
+
+    } else {
+      addFavorites(storyId)
+      clicked.parent().addClass("favorited"); //$(e.currentTarget).parent().addClass("favorited");
+      clicked.children().first().attr('data-prefix', 'fas'); //$(e.currentTarget).children().first().attr('data-prefix', 'fas');
+    }
+  });
+
   // del icon
-  $('.stories').on('click', 'span.del', e => {
+  $('.user-stories').on('click', 'span.del', e => {
     let clicked = $(e.currentTarget);
     let storyId = clicked.parent().attr('id');
+    clicked.parent().remove()
     removeStory(storyId);
   });
 
@@ -163,16 +219,16 @@ $(document).ready(() => {
     let $title = obj.title;
     let $url = obj.url;
 
+    // let $smallUrl = $url.replace(/^\/\/|^.*?:(\/\/)?(www\.)?/, '').replace(/^www\./, '');
     $('ol.stories').append(
       `
         <li id=${$id}>
           <span class="fav">
             <i class="foo far fa-star"></i>
           </span>
-          <span class="del">
-            <i class="fas fa-times"></i>
-          </span>
+          <a href="${$url}" class="smallSite" target="_blank">
           <span class="list-text">${$title}</span>
+          </a>
           <span class="smallSite">
             <a href="#" class="smallSite">(${$url})</a>
           </span>
@@ -190,7 +246,7 @@ $(document).ready(() => {
     let $password = $('#password-sign-up').val();
 
     signUp($name, $username, $password);
-    location.href = 'index.html' + $(this).serialize();
+    location.href = 'index.html';
   })
 
   function signUp(name, username, password) {
@@ -250,10 +306,13 @@ $(document).ready(() => {
     let $password = $('#password-sign-in').val();
 
     genToken($username, $password).then(function (token) {
-      // $('#login-link').load('./index.html').hide();
-      // $('#logout-link').load('./index.html').show();
 
       location.href = 'index.html';
+      // $('#login-link').load('./index.html').hide();
+      // $('#logout-link').load('./index.html').show();
+      // $('.logs').prepend(
+      //   `${$username}`
+      // )
       storeToken(token);
     }).catch(function (data) {
       if (data.status === 404 || data.status === 401) {
@@ -261,6 +320,14 @@ $(document).ready(() => {
       } else alert("Bad login.")
     })
 
+  })
+
+
+  /************          Log Out            *******************************/
+
+  $('#logout-link').on('click', () => {
+    localStorage.clear();
+    location.href = 'index.html';
   })
 
   /**********    addFavorites             ****************/
@@ -300,14 +367,14 @@ $(document).ready(() => {
         Authorization: `Bearer ${token}`
       }
     }).then(function (data) {
-      console.log(data['data']['favorites']);
+      // console.log(data['data']['favorites']);
     })
 
   }
 
   /**********    createStory             ****************/
 
-  function createStory(title, url) {
+  function createStory(title, url, author) {
 
     let username = localStorage.getItem("username")
     let token = localStorage.getItem("token")
@@ -321,14 +388,18 @@ $(document).ready(() => {
       data: {
         data: {
           username,
-          author: 'Sunny Hunter',
+          author,
           title,
           url,
         }
       }
-    }).then(function (response) {
-      console.log(response['data']);
-    })
+    }).then(response => {
+      location.href = 'index.html'
+      console.log("damn");
+      debugger;
+    }).catch(function () {
+      alert("damn some shit went down");
+    });
   }
 
   /**********    removeStory             ****************/
@@ -345,7 +416,7 @@ $(document).ready(() => {
         Authorization: `Bearer ${token}`
       },
     }).then(function (response) {
-      console.log(response['data']);
+      // console.log(response['data']);
     })
   }
 
@@ -365,10 +436,22 @@ $(document).ready(() => {
     $("#user-stories, #reg-stories").toggle();
   })
 
+  $("#user-profile").on('click', () => {
 
+  })
 
   function isLoggedIn() {
-    return localStorage.getItem("token") !== null;
+    if (localStorage.getItem("token") !== null) {
+      let $username = localStorage.getItem("username")
+      $('#login-link').hide();
+      $('#logout-link').show();
+      $('.logs').prepend(
+        `<span id="user-profile">
+        ${$username} | 
+        </span>`
+
+      )
+    }
   }
 
 
@@ -379,4 +462,5 @@ $(document).ready(() => {
   /*********************  Function Calls  *******************************/
 
   topTen()
+  isLoggedIn()
 })

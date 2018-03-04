@@ -98,7 +98,8 @@ a.smallSite {
   color: #a2a4a2;
 }
 
-.sub-form,
+/* .sub-form, */
+
 .sign-up-form,
 .sign-in-form {
   margin-right: 13%;
@@ -139,7 +140,8 @@ li {
   color: black;
 }
 
-.fa-star:hover {
+.fa-star,
+.fa-times:hover {
   cursor: pointer;
 }
 
@@ -166,5 +168,5 @@ ul.fav-stories {
 /*******/
 
 #logout-link {
-  /* display: none; */
+  display: none;
 }

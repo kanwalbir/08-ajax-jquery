@@ -28,7 +28,7 @@
         <a href="#">comments</a>
         <!-- <span id="bar"> | </span> -->
         |
-        <a href="#">show my stories</a>
+        <a id="my-stories" href="#">show my stories</a>
         <!-- <span id="bar"> | </span> -->
         |
         <a href="#">ask</a>
@@ -41,124 +41,12 @@
         |
         <a id="favs" href="#">favorites</a>
         <a class="hide" id="all" href="#">all</a>
-        <span class="float-right">
+        <span class="float-right logs">
           <a id="login-link" href="login.html">login</a>
-          <a id="logout-link" href="login.html">logout</a>
+          <a id="logout-link" href="#">logout</a>
         </span>
       </div>
     </header>
-
-    <!-- <div class="row">
-      <div class=col-12>
-
-        <div class="row hack">
-          <div class="col-mid-8 heading">
-            Hack or Snooze
-          </div>
-          <div class="col-mid-2 text">
-            <a id="submitFav" href="#">submit</a>
-          </div>
-          <div class="col-mid-2 text" id="bar">|</div>
-          <div class="col-mid-2 text">
-            <a id="favs" href="#">favorites</a>
-            <a class="hide" id="all" href="#">all</a>
-          </div>
-          <div class="col-4">
-            <label id="test">welcome: </label>
-          </div>
-          <div class="col-mid-2 text">
-            <input class="btn btn-primary" type="submit" value="sign up" id="sign-up">
-          </div>
-          <div class="col-1"></div>
-          <div class="col-mid-2 text">
-            <input class="btn btn-primary" type="submit" value="sign in" id="sign-in">
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!--           Submit Form      -->
-
-
-    <form class="sub-form hide">
-      <div class="form-group row">
-        <div class="col-sm-1"></div>
-        <label for="colFormLabel" class="col-sm-1 col-form-label">title</label>
-        <div class="col-sm-6">
-          <input id="title" type="text" class="form-control form-control-lg">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-sm-1"></div>
-        <label for="colFormLabel" class="col-sm-1 col-form-label">url</label>
-        <div class="col-sm-6">
-          <input id="url" type="url" class="form-control form-control-lg">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary" id="submit-story">submit</button>
-        </div>
-      </div>
-    </form>
-
-    <!--         Sign-up                       -->
-
-    <form class="sign-up-form hide">
-      <div class="form-group row">
-        <label for="colFormLabel" class="col-sm-1 col-form-label">name</label>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-6">
-          <input id="name-sign-up" type="text" class="form-control form-control-lg">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="colFormLabel" class="col-sm-1 col-form-label">username</label>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-6">
-          <input id="username-sign-up" type="text" class="form-control form-control-lg">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="colFormLabel" class="col-sm-1 col-form-label">password</label>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-6">
-          <input id="password-sign-up" type="password" class="form-control form-control-lg">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary" id="submit-sign-up">sign up</button>
-        </div>
-      </div>
-    </form>
-
-    <!--               Sign-In      -->
-
-    <form class="sign-in-form hide">
-      <div class="form-group row">
-        <label for="colFormLabel" class="col-sm-1 col-form-label">username</label>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-6">
-          <input id="username-sign-in" type="text" class="form-control form-control-lg">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="colFormLabel" class="col-sm-1 col-form-label">password</label>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-6">
-          <input id="password-sign-in" type="password" class="form-control form-control-lg">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="colFormLabel" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-          <button id="submit-sign-in" type="submit" class="btn btn-primary">sign in</button>
-        </div>
-      </div>
-    </form>
 
     <!--         Top Ten Stories                -->
 
@@ -178,12 +66,9 @@
       </div>
     </div>
     <!--      User Stories    -->
-    <div class="row list hide" id="user-stories">
+    <div class="row list">
       <div class="col-12">
-        <ol class="stories">
-          <li>Test</li>
-          <li>myass</li>
-          <li>myassagain</li>
+        <ol class="user-stories">
         </ol>
       </div>
     </div>
